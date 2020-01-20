@@ -1,0 +1,17 @@
+/venv/
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+/.idea
+.idea/
+.ropeproject
+*.log
+local_settings.py
+local_config.py
+*.db
+celerybeat-schedule
+settings_local.py
+.todo
+*.mo
+tmp/
