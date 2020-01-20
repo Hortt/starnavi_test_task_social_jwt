@@ -1,5 +1,8 @@
 Django==3.0.2
 djangorestframework==3.11.0
 djangorestframework-simplejwt==4.4.0
+django-rest-swagger==2.2.0
+
+faker==4.0.0
 
 pre-commit==1.21.0
