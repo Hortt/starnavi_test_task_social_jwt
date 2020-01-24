@@ -1,5 +1,3 @@
-import uuid
-
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
@@ -9,7 +7,6 @@ class User(AbstractUser):
     """
     Custom User model
     """
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     phone = models.CharField(_('Phone number'),
                              max_length=100,
                              null=True,
