@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/3.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.0/ref/settings/
 """
-
+import datetime
 import os
 
 from datetime import timedelta
@@ -67,8 +67,8 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'starnavi_test_task_social_jwt.urls'
 
-SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(hours=2),
+JWT_AUTH = {
+    "JWT_EXPIRATION_DELTA": datetime.timedelta(days=7),
 }
 
 REST_FRAMEWORK = {
