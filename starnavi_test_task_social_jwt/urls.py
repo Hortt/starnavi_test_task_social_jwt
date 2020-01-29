@@ -17,17 +17,11 @@ urlpatterns = [
     url(r'^$', schema_view),
     path('admin/', admin.site.urls),
     path('api/posts/', include('posts.urls')),
-    path('api/', include('accounts.urls')),
-    url('api/api-token-auth/', obtain_jwt_token),
-    url('api/api-token-refresh/', refresh_jwt_token),
-    url('api/api-token-verify/', verify_jwt_token),
+    path('api/accounts/', include('accounts.urls')),
+    url('api/token/auth/', obtain_jwt_token),
+    url('api/token/refresh/', refresh_jwt_token),
+    url('api/token/verify/', verify_jwt_token),
 ]
 
-
 if settings.DEBUG:
-    # import debug_toolbar
-
-    urlpatterns = [
-                      path('swagger/', schema_view),
-                      # path('__debug__/', include(debug_toolbar.urls)),
-                  ] + urlpatterns
+    urlpatterns = [path('swagger/', schema_view)] + urlpatterns
