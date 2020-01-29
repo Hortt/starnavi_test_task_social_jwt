@@ -67,9 +67,7 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'starnavi_test_task_social_jwt.urls'
 
-JWT_AUTH = {
-    "JWT_EXPIRATION_DELTA": datetime.timedelta(days=7),
-}
+APPEND_SLASH = True
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
