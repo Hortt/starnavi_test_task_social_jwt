@@ -11,8 +11,8 @@ class PostInputSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Post
-        fields = ('title', 'content', 'author')
-        read_only_fields = ('author', )
+        fields = ('title', 'content', 'author', 'id')
+        read_only_fields = ('author', 'id')
 
     def create(self, validated_data):
         validated_data.update({'author': self.context['request'].user})
@@ -27,7 +27,7 @@ class PostOutputSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Post
-        fields = ('title', 'content', 'author', 'likes')
+        fields = ('title', 'content', 'author', 'likes', 'id')
 
     def get_likes(self, obj):
         return obj.like_set.objects.count()
