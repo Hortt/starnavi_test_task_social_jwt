@@ -1,10 +1,9 @@
 import random
 
-from .strategies import LikePostRequestStrategy, UserPostRequestStrategy, \
-    PostPostRequestStrategy
+from .strategies import (LikePostRequestStrategy,
+                         UserPostRequestStrategy,
+                         PostPostRequestStrategy)
 from .factories import RandomUserFactory, RandomPostFactory
-
-
 from .parsers import IniParser
 
 
@@ -49,10 +48,9 @@ class RandomRequestsService:
     def _post_posts(self):
         for post in self.posts:
             PostPostRequestStrategy.post(post, random.choice(
-                [
-                    user for user
-                    in self.users
-                    if user.posts_count < self.max_posts_per_user]
+                [user for user
+                 in self.users
+                 if user.posts_count < self.max_posts_per_user]
             ))
 
     def _post_users(self):
