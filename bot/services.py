@@ -8,7 +8,7 @@ from .factories import RandomUserFactory, RandomPostFactory
 from .parsers import IniParser
 
 
-class RequestsService:
+class RandomRequestsService:
 
     CONFIG_PARSER = IniParser
 
@@ -20,6 +20,15 @@ class RequestsService:
         self.users = []
         self.posts = []
 
+    def create_entities(self):
+        self._create_users()
+        self._create_posts()
+
+    def post_entities(self):
+        self._post_users()
+        self._post_posts()
+        self._post_likes()
+
     def _create_users(self):
         for _ in range(self.number_of_users):
             u = RandomUserFactory().create()
@@ -29,15 +38,6 @@ class RequestsService:
         for _ in range(self.max_posts_per_user):
             post = RandomPostFactory().create()
             self.posts.append(post)
-
-    def create_entities(self):
-        self._create_users()
-        self._create_posts()
-
-    def post_entities(self):
-        self._post_users()
-        self._post_posts()
-        self._post_likes()
 
     def _post_likes(self):
         for user in (

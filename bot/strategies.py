@@ -36,7 +36,7 @@ class LikePostRequestStrategy(PostRequestStrategy):
     @classmethod
     def post(cls, post, user):
         headers = {'Authorization': f'JWT {user.get_jwt()}'}
-        res = requests.post(url=POSTS_LIKE_TEMPLATE_URL.format(post.id),
-                            data={},
-                            headers=headers)
+        requests.post(url=POSTS_LIKE_TEMPLATE_URL.format(post.id),
+                      data={},
+                      headers=headers)
         user.increment_likes_count()

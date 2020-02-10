@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand
-from ...services import RequestsService
+from ...services import RandomRequestsService
 
 
 class Command(BaseCommand):
@@ -7,4 +7,4 @@ class Command(BaseCommand):
            'we assume this api might be placed on a different resource'
 
     def handle(self, *args, **options):
-        RequestsService().execute()
+        RandomRequestsService().execute()
