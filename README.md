@@ -17,4 +17,5 @@ Simple DRF application with JWT. Uses sqlite intentionally to make this work
 
 Bot might be deployed separately as a microservice and fully independent of
  models/views/etc. Also might be adding logging or some stout for management
-  command later AND Behave tests for views and dockerize that thing 
+  command later AND Behave tests for views and dockerize that thing. Also
+  , might be adding arguments to management command to set ini file, etc 
