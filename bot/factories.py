@@ -1,11 +1,10 @@
 from abc import abstractmethod, ABC
 
 from faker import Faker
-
 from faker.utils.text import slugify
 from faker.providers import internet
 
-from .entities import User
+from .entities import User, Post
 
 fake = Faker()
 fake.add_provider(internet)
@@ -25,7 +24,7 @@ class RandomUserFactory(EntityFactory):
 
     fake = fake
 
-    def create(self):
+    def create(self) -> User:
         return User(
             username=slugify(self.fake.name()),
             email=self.fake.email(),
@@ -35,12 +34,13 @@ class RandomUserFactory(EntityFactory):
             phone=self.fake.last_name()
         )
 
-#
-# class RandomPostFactory(EntityFactory):
-#     fake = fake
-#
-#     def create(self):
-#         return Post(
-#             title=slugify(self.fake.name()),
-#             content=self.fake.text()),
-#         )
+
+class RandomPostFactory(EntityFactory):
+
+    fake = fake
+
+    def create(self) -> Post:
+        return Post(
+            title=self.fake.name(),
+            content=self.fake.text(),
+        )

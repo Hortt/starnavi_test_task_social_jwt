@@ -1,21 +1,14 @@
 from abc import ABC, abstractmethod
 
-from .constants import *
-import requests
 
-
-class PostEntity(ABC):
-
-    @abstractmethod
-    def post(self):
-        pass
+class PostableEntity(ABC):
 
     @abstractmethod
     def to_dict(self):
         pass
 
 
-class User(PostEntity):
+class User(PostableEntity):
 
     def __init__(self, *,
                  username=None,
@@ -35,10 +28,6 @@ class User(PostEntity):
         self.likes_count = 0
         self.jwt = None
 
-    def post(self):
-        res = requests.post(url=REGISTER_URL, data=self.to_dict())
-        self.jwt = res.json().get('token')
-
     def increment_posts_count(self):
         self.posts_count += 1
 
@@ -48,7 +37,7 @@ class User(PostEntity):
     def get_jwt(self):
         if self.jwt:
             return self.jwt
-        raise ValueError("Invalid")
+        raise AttributeError("User doesn't have JWT. Log in or register")
 
     def to_dict(self):
         return {
@@ -65,18 +54,21 @@ class User(PostEntity):
         return repr(self.to_dict())
 
 
-class Post(PostEntity):
+class Post(PostableEntity):
 
-    def __init__(self, *, title, content, user: User):
+    def __init__(self, *, title, content, user: User = None):
         self.user = user
         self.content = content
-        self.title = content
+        self.title = title
         self.id = None
 
-    def post(self):
-        headers = {'Authorization': f'JWT {self.user.get_jwt()}'}
-        res = requests.post(url=POSTS_CREATE_URL,
-                            data=self.to_dict(),
-                            headers=headers)
-        self.id = res.json().get('id')
-        self.user.increment_posts_count()
+    def to_dict(self):
+        return {
+            "content": self.content,
+            "title": self.title,
+        }
+
+    def get_id(self):
+        if self.id:
+            return self.id
+        raise AttributeError("Post doesn't have ID")
