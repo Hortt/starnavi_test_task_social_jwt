@@ -14,6 +14,7 @@ Simple DRF application with JWT. Uses sqlite intentionally to make this work
 1) make sure you have set all the values filled on `bot_rules.ini`
 2) run management command `python manage.py fill_data_with_api`
 3) see postman collection to check if all is correctly created
+
 Bot might be deployed separately as a microservice and fully independent of
  models/views/etc. Also might be adding logging or some stout for management
   command later AND Behave tests for views and dockerize that thing 
