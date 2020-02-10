@@ -1,4 +1,5 @@
 from django.http import Http404
+from rest_framework import status
 
 from rest_framework.generics import (
     CreateAPIView,
@@ -7,6 +8,7 @@ from rest_framework.generics import (
     get_object_or_404
 )
 from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.response import Response
 
 from .models import Like, Post
 from .permissions import ObjectAuthorPermission
@@ -30,7 +32,7 @@ class PostListView(ListAPIView):
     permission_classes = (AllowAny, )
 
 
-class PostLikeView(CreateAPIView):
+class PostLikeView(CreateAPIView, DestroyAPIView):
 
     serializer_class = PostLikeSerializer
     permission_classes = (IsAuthenticated, ObjectAuthorPermission,)
@@ -40,16 +42,15 @@ class PostLikeView(CreateAPIView):
         request.data.update({'post': post})
         return super().create(request, *args, **kwargs)
 
-
-class PostUnlikeView(DestroyAPIView):
-
-    serializer_class = PostLikeSerializer
-    permission_classes = (IsAuthenticated, ObjectAuthorPermission,)
-
-    def get_object(self, queryset=None):
+    def get_object_for_delete(self, queryset=None):
         latest_like = Like.objects.filter(
             author=self.request.user,
             post_id=self.kwargs['pk']).last()
         if not latest_like:
             raise Http404
         return latest_like
+
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object_for_delete()
+        self.perform_destroy(instance)
+        return Response(status=status.HTTP_204_NO_CONTENT)
